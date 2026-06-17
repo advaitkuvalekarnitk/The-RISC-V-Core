@@ -20,7 +20,7 @@ always @(*) begin
     4'b0100 : alu_output = a - b;
     4'b0101 : alu_output = a >> shift_amount;
     4'b0110 : alu_output = a << shift_amount;
-    4'b0111 : alu_output = $signed(a) >>> shift_amount;
+    4'b0111 : alu_output = $signed(a) >>> shift_amount;         //keeping everything unsigned as long as its explicitly needed reduces the      hardware used and also allows us to decide whether the alu output is to be interpreted as signed or unsigned later on.
     4'b1000 : begin
         less_than_flag = ($signed(a) < $signed(b)) ? 1'b1 : 1'b0;
         alu_output = {31'b0, less_than_flag};
