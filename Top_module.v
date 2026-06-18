@@ -55,3 +55,5 @@ module risc_v_core (
 
     assign pc_next = (pc_sel == 2'b01) ? pc_target : 
                      (pc_sel == 2'b10) ? (read_data1 + extended_imm) : pc_plus_4;
+                     
+     endmodule
