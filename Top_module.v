@@ -15,11 +15,14 @@ module risc_v_core (
     wire zero, lt, reg_we, mem_we, alu_src;
     wire [1:0] pc_sel;
     wire [2:0] wb_sel;
+    wire [4:0] rs1_address, rs2_address, rd_address;
+
 
     assign pc_plus_4 = pc_current + 4;
     assign funct3 = instr[14:12];
     assign funct7 = instr[31:25];
     assign opcode = instr[6:0];
+
 
     program_counter pc (.next_instruction_address(pc_next), .clk(clk), .rst(rst), .current_instruction_address(pc_current));
 
@@ -53,7 +56,9 @@ module risc_v_core (
                              (wb_sel == 3'b010) ? (pc_current + extended_imm) : 
                              (wb_sel == 3'b100) ? pc_plus_4 : alu_out;
 
-    assign pc_next = (pc_sel == 2'b01) ? pc_target : 
-                     (pc_sel == 2'b10) ? (read_data1 + extended_imm) : pc_plus_4;
+
+    assign pc_next = (pc_sel == 2'b01) ? pc_target :                   // JAL/Branch target
+                    (pc_sel == 2'b10) ? (read_data1 + extended_imm) : // JALR
+                    pc_plus_4;
                      
      endmodule
