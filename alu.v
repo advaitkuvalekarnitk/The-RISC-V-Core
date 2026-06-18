@@ -31,9 +31,16 @@ always @(*) begin
     end
     default : alu_output = 32'b0;
     endcase
-    if (alu_output == 32'b0)
-    begin
-        zero_flag = 1;
+
+    if ((alu_control != 4'b1000) && (alu_control != 4'b1001))
+    begin 
+        if (alu_output == 32'b0)
+            begin
+                zero_flag = 1;
+            end
+    end
+    else begin
+        zero_flag = 1'b0;
     end
 end
 endmodule

@@ -1,4 +1,4 @@
-module program_counter_plus_four (input [31:0] next_instruction_address,
+module program_counter (input [31:0] next_instruction_address,
                                 input clk, 
                                 input rst,
                                 output reg [31:0] current_instruction_address);

@@ -1,4 +1,4 @@
-module sign_exteder (input [2:0] extender_control,
+module sign_extender (input [2:0] extender_control,
                     input [31:0] instruction_from_instruction_memory,
                     output reg [31:0] extended_value);
 
@@ -12,6 +12,8 @@ case(extender_control)
 3'b010 : extended_value = {instruction_from_instruction_memory[31:12], 12'b0};
 //B-type
 3'b011 : extended_value = {{19{instruction_from_instruction_memory[31]}}, instruction_from_instruction_memory[31], instruction_from_instruction_memory[7], instruction_from_instruction_memory[30:25], instruction_from_instruction_memory[11:8], 1'b0};
+//J-Type
+3'b100 : extended_value = {{12{instruction_from_instruction_memory[31]}}, instruction_from_instruction_memory[19:12], instruction_from_instruction_memory[20], instruction_from_instruction_memory[30:21], 1'b0};
 //default
 default : extended_value = 32'b0;
 endcase
